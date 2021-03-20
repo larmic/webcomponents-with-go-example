@@ -1,46 +1,12 @@
+import { LitElement, html, css } from "lit-element";
 import {parseReadableDateTime} from "./readableDateTime.js"
 import {readClock} from "./clockClient.js"
 
-const template = document.createElement('template')
-template.innerHTML = `
-<div class="clock">
-    <div class="time">Waiting for update...</div>
-    <div class="date"></div>
-</div>
-
-<style>
-    :host .clock {
-        border: 2px solid lightgray;
-        border-radius: 8px;
-        background-color: #FFFFFF;
-        margin: auto;
-        width: 300px;
-        padding: 10px;
-    }
-    :host .time {
-        font-size: 32px;   
-    }
-    :host .date {
-        color: rgb(135,135,135);
-        font-size: 16px;   
-    }
-</style>
-`
-
-class SimpleClock extends HTMLElement {
-
-    constructor() {
-        super()
-
-        // attach Shadow DOM to the parent element.
-        // save the shadowRoot in a property because, if you create your shadow DOM in closed mode,
-        // you have no access from outside
-        this._shadowRoot = this.attachShadow({mode: 'closed'})
-        // clone template content nodes to the shadow DOM
-        this._shadowRoot.appendChild(template.content.cloneNode(true))
-    }
+class SimpleClock extends LitElement {
 
     connectedCallback() {
+        super.connectedCallback();
+
         // start after a few seconds -> show webcomponents default text
         setTimeout(() => {
             this.updateClockComponent()
@@ -61,9 +27,36 @@ class SimpleClock extends HTMLElement {
         this._render()
     }
 
+    render() {
+        return html`<div class="clock">
+            <div class="time">Waiting for update...</div>
+            <div class="date"></div>
+        </div>`;
+    }
+
+    static get styles() {
+        return css`
+            :host .clock {
+                border: 2px solid lightgray;
+                border-radius: 8px;
+                background-color: #FFFFFF;
+                margin: auto;
+                width: 300px;
+                padding: 10px;
+            }
+            :host .time {
+                font-size: 32px;   
+            }
+            :host .date {
+                color: rgb(135,135,135);
+                font-size: 16px;   
+            }
+        `
+    }
+
     _render() {
-        this._shadowRoot.querySelector('.time').innerHTML = this._time
-        this._shadowRoot.querySelector('.date').innerHTML = this._dayOfTheWeek + ', ' + this._date + '(CET)'
+        this.shadowRoot.querySelector('.time').innerHTML = this._time
+        this.shadowRoot.querySelector('.date').innerHTML = this._dayOfTheWeek + ', ' + this._date + '(CET)'
     }
 }
 
