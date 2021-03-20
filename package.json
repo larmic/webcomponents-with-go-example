@@ -2,7 +2,7 @@
   "name": "webcomponents-with-go-example",
   "author": "Lars Michaelis",
   "version": "0.0.1",
-  "description": "Simple webcomponents using parcel js and go as server example",
+  "description": "Simple webcomponents using parceljs, lit html and go as server example",
   "scripts": {
     "dev": "parcel serve ./src/index.html",
     "build": "parcel build ./src/index.html --public-url './'",
