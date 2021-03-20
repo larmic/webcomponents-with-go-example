@@ -4,6 +4,20 @@ import {readClock} from "./clockClient.js"
 
 class SimpleClock extends LitElement {
 
+    static get properties(){
+        return {
+            time: {type: String},
+            date: {type: String}
+        };
+    }
+
+    constructor() {
+        super();
+
+        this.time = 'Waiting for update...'
+        this.date = ''
+    }
+
     connectedCallback() {
         super.connectedCallback();
 
@@ -21,16 +35,14 @@ class SimpleClock extends LitElement {
     async updateClockComponent() {
         let clock = await readClock()
         const readableDateTime = parseReadableDateTime(clock.currentDateTime)
-        this._time = readableDateTime.time
-        this._date = readableDateTime.date
-        this._dayOfTheWeek = clock.dayOfTheWeek
-        this._render()
+        this.time = readableDateTime.time
+        this.date = clock.dayOfTheWeek + ', ' + readableDateTime.date + '(CET)'
     }
 
     render() {
         return html`<div class="clock">
-            <div class="time">Waiting for update...</div>
-            <div class="date"></div>
+            <div class="time">${this.time}</div>
+            <div class="date">${this.date}</div>
         </div>`;
     }
 
@@ -52,11 +64,6 @@ class SimpleClock extends LitElement {
                 font-size: 16px;   
             }
         `
-    }
-
-    _render() {
-        this.shadowRoot.querySelector('.time').innerHTML = this._time
-        this.shadowRoot.querySelector('.date').innerHTML = this._dayOfTheWeek + ', ' + this._date + '(CET)'
     }
 }
 
