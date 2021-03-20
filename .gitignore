@@ -1,8 +1,11 @@
-# Ide
-bin/*
+# Idea
 .idea
 
 dist
+bin/*
+
+# Parcel
+.parcel-cache
 
 # Logs
 logs
