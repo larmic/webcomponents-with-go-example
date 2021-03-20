@@ -1,0 +1,15 @@
+{
+  "name": "webcomponents-with-go-example",
+  "author": "Lars Michaelis",
+  "version": "0.0.1",
+  "description": "Simple webcomponents using parcel js and go as server example",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html --public-url './'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}
