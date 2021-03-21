@@ -1,11 +1,13 @@
 import {css, html, LitElement} from "lit-element";
 import {readInfo} from "./infoClient";
+import './attribute'
 
 class InfoPanel extends LitElement {
 
     static get properties() {
         return {
             version: {type: String},
+            author: {type: String},
             browserSize: {type: String},
         };
     }
@@ -14,6 +16,7 @@ class InfoPanel extends LitElement {
         super();
 
         this.version = 'Waiting for update...'
+        this.author = 'Waiting for update...'
 
         this._isLarge = window.matchMedia('(min-width: 1200px)');
         this._isMedium = window.matchMedia('(min-width: 990px)');
@@ -35,6 +38,7 @@ class InfoPanel extends LitElement {
     async updateComponent() {
         let info = await readInfo()
         this.version = info.version
+        this.author = info.author
     }
 
     _getBrowserSize() {
@@ -57,17 +61,25 @@ class InfoPanel extends LitElement {
                 <div class="header">
 
                 </div>
-                <div class="attributes">
-                    <div class="attribute">
-                        <div class="icon">ICON</div>
-                        <div class="value">${this.version}</div>
-                    </div>
-                    <div class="attribute">
-                        <div class="icon">ICON</div>
-                        <div class="value">${this.browserSize}</div>
-                    </div>
+                <div id="attributes">
+                    <attribute-line key="version" value="${this.version}"></attribute-line>
+                    <attribute-line key="author" value="${this.author}"></attribute-line>
+                    <attribute-line key="browserSize" value="${this.browserSize}"></attribute-line>
                 </div>
             </div>`;
+    }
+
+    firstUpdated(changedProperties) {
+        let attributes = this.shadowRoot.getElementById('attributes')
+
+        for (let childNumber = 0; childNumber < attributes.children.length; childNumber++) {
+            const isSecondIteration = (childNumber + 1) % 2 === 0;
+
+            if (isSecondIteration) {
+                let child = attributes.children.item(childNumber);
+                child.setAttribute("straightElement", "true")
+            }
+        }
     }
 
     static get styles() {
@@ -82,13 +94,6 @@ class InfoPanel extends LitElement {
                 background: linear-gradient(to right,#2775ff,#7202bb);
                 padding: 24px 40px;
                 color: rgba(255,255,255,.9);
-            }
-            :host .attribute {
-                color: #4e4e4e;
-                font-size: 14px;
-                border-bottom: 1px solid #ececec;
-                position: relative;
-                padding: 28px;
             }
             :host .info-panel.large {
                 max-width: 1140px;
