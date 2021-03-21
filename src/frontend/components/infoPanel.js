@@ -15,19 +15,15 @@ class InfoPanel extends LitElement {
             parcelVersion: {type: String},
             litElementVersion: {type: String},
             browserSize: {type: String},
+            infoLoaded: {type: Boolean},
         };
     }
 
     constructor() {
         super();
 
-        this.name = 'Waiting for update...'
-        this.version = 'Waiting for update...'
-        this.author = 'Waiting for update...'
-        this.repository = 'Waiting for update...'
-        this.goVersion = 'Waiting for update...'
-        this.parcelVersion = 'Waiting for update...'
-        this.litElementVersion = 'Waiting for update...'
+        this.infoLoaded = false;
+        this.name = 'Loading...'
 
         this._isLarge = window.matchMedia('(min-width: 1200px)');
         this._isMedium = window.matchMedia('(min-width: 990px)');
@@ -55,9 +51,11 @@ class InfoPanel extends LitElement {
         this.goVersion = info.technologies.go
         this.parcelVersion = info.technologies.parcel
         this.litElementVersion = info.technologies.litElement
+        this.infoLoaded = true
 
         const spinner = this.shadowRoot.getElementById("spinner")
         spinner.remove()
+
     }
 
     _getBrowserSize() {
@@ -81,14 +79,17 @@ class InfoPanel extends LitElement {
                     ${this.name}
                 </div>
                 <mil-pulse-spinner id="spinner"></mil-pulse-spinner>
-                <div id="attributes">
-                    <attribute-line key="version" value="${this.version}"></attribute-line>
-                    <attribute-line key="author" value="${this.author}"></attribute-line>
-                    <attribute-line key="repository" value="${this.repository}"></attribute-line>
-                    <attribute-line key="go" value="${this.goVersion}"></attribute-line>
-                    <attribute-line key="parcel" value="${this.parcelVersion}"></attribute-line>
-                    <attribute-line key="lit element" value="${this.litElementVersion}"></attribute-line>
-                </div>
+                ${this.infoLoaded ?
+                        html`
+                            <div id="attributes">
+                                <attribute-line key="version" value="${this.version}"></attribute-line>
+                                <attribute-line key="author" value="${this.author}"></attribute-line>
+                                <attribute-line key="repository" value="${this.repository}"></attribute-line>
+                                <attribute-line key="go" value="${this.goVersion}"></attribute-line>
+                                <attribute-line key="parcel" value="${this.parcelVersion}"></attribute-line>
+                                <attribute-line key="lit element" value="${this.litElementVersion}"></attribute-line>
+                            </div>` : ''
+                }
             </div>`;
     }
 
@@ -109,6 +110,7 @@ class InfoPanel extends LitElement {
         return css`
             :host .info-panel {
                 width: 100%;
+                min-height: 300px;
                 margin-right: auto;
                 margin-left: auto;
                 box-shadow: 0 6px 30px 0 rgb(0 0 0 / 12%);
