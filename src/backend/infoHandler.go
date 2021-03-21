@@ -13,10 +13,15 @@ type Technologies struct {
 	LitElementVersion string `json:"lit_element_version"`
 }
 
+type Repository struct {
+	Url string `json:"url"`
+}
+
 type Info struct {
 	Version      string       `json:"version"`
 	Name         string       `json:"name"`
 	Author       string       `json:"author"`
+	Repository   Repository   `json:"repository"`
 	Technologies Technologies `json:"technologies"`
 }
 
@@ -30,6 +35,9 @@ func NewInfoHandler(packageJson PackageJson) *InfoHandler {
 			Version: packageJson.Version,
 			Name:    packageJson.Name,
 			Author:  packageJson.Author,
+			Repository: Repository{
+				Url: packageJson.Repository.Url,
+			},
 			Technologies: Technologies{
 				GoVersion:         runtime.Version(),
 				ParcelVersion:     trimPrefix(packageJson.DevDependencies.ParcelVersion),

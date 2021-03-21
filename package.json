@@ -3,6 +3,10 @@
   "author": "Lars Michaelis",
   "version": "0.0.1",
   "description": "Simple webcomponents using parceljs, lit html and go as server example",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/larmic/webcomponents-with-go-example"
+  },
   "scripts": {
     "dev": "parcel serve src/frontend/index.html",
     "build": "parcel build src/frontend/index.html --public-url './'",

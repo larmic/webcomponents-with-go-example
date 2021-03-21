@@ -6,8 +6,13 @@ class InfoPanel extends LitElement {
 
     static get properties() {
         return {
+            name: {type: String},
             version: {type: String},
             author: {type: String},
+            repository: {type: String},
+            goVersion: {type: String},
+            parcelVersion: {type: String},
+            litElementVersion: {type: String},
             browserSize: {type: String},
         };
     }
@@ -15,8 +20,13 @@ class InfoPanel extends LitElement {
     constructor() {
         super();
 
+        this.name = 'Waiting for update...'
         this.version = 'Waiting for update...'
         this.author = 'Waiting for update...'
+        this.repository = 'Waiting for update...'
+        this.goVersion = 'Waiting for update...'
+        this.parcelVersion = 'Waiting for update...'
+        this.litElementVersion = 'Waiting for update...'
 
         this._isLarge = window.matchMedia('(min-width: 1200px)');
         this._isMedium = window.matchMedia('(min-width: 990px)');
@@ -37,8 +47,13 @@ class InfoPanel extends LitElement {
 
     async updateComponent() {
         let info = await readInfo()
+        this.name = info.name
         this.version = info.version
         this.author = info.author
+        this.repository = info.repository
+        this.goVersion = info.technologies.go
+        this.parcelVersion = info.technologies.parcel
+        this.litElementVersion = info.technologies.litElement
     }
 
     _getBrowserSize() {
@@ -59,12 +74,15 @@ class InfoPanel extends LitElement {
         return html`
             <div class="info-panel ${this.browserSize}">
                 <div class="header">
-
+                    ${this.name}
                 </div>
                 <div id="attributes">
                     <attribute-line key="version" value="${this.version}"></attribute-line>
                     <attribute-line key="author" value="${this.author}"></attribute-line>
-                    <attribute-line key="browserSize" value="${this.browserSize}"></attribute-line>
+                    <attribute-line key="repository" value="${this.repository}"></attribute-line>
+                    <attribute-line key="go" value="${this.goVersion}"></attribute-line>
+                    <attribute-line key="parcel" value="${this.parcelVersion}"></attribute-line>
+                    <attribute-line key="lit element" value="${this.litElementVersion}"></attribute-line>
                 </div>
             </div>`;
     }
