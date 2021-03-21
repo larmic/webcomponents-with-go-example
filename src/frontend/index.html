@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Webcomponents with parcel on go server demo</title>
+
+    <link rel="stylesheet" href="./index.scss" />
 </head>
 <body>
 
 <simple-clock></simple-clock>
+<info-panel></info-panel>
 
 <script src="components/simpleClock.js" type="module"></script>
-<script type="application/javascript">
-    fetch('/info')
-        .then(response => response.json())
-        .then(data => console.log(data))
-</script>
+<script src="components/infoPanel.js" type="module"></script>
 </body>
 </html>

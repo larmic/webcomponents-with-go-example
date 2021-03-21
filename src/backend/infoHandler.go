@@ -8,9 +8,9 @@ import (
 )
 
 type Technologies struct {
-	GoVersion         string `json:"go-version"`
-	ParcelVersion     string `json:"parcel-version"`
-	LitElementVersion string `json:"lit-element-version"`
+	GoVersion         string `json:"go_version"`
+	ParcelVersion     string `json:"parcel_version"`
+	LitElementVersion string `json:"lit_element_version"`
 }
 
 type Info struct {
