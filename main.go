@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"encoding/json"
 	"io/fs"
 	"log"
 	"net/http"
@@ -10,8 +11,17 @@ import (
 
 const frontendFolder = "dist"
 
-//go:embed dist/*
-var frontend embed.FS
+type PackageJson struct {
+	Version string `json:"version"`
+}
+
+var packageJson PackageJson
+
+//go:embed package.json
+var packageJsonFS []byte
+
+//go:embed dist
+var frontendFS embed.FS
 
 // support http://localhost:8080 instead of http://localhost:8080/dist as app root
 // see https://github.com/golang/go/issues/43431#issuecomment-752662261
@@ -26,12 +36,15 @@ func (c myFS) Open(name string) (fs.File, error) {
 }
 
 func info(w http.ResponseWriter, r *http.Request) {
-	_, _ = w.Write([]byte("{\"version\":\"0.0.1\"}"))
+	_, _ = w.Write([]byte("{\"version\":\"" + packageJson.Version + "\"}"))
 }
 
 func main() {
 	log.Println("Hello webcomponents-with-go-example!")
-	http.Handle("/", http.FileServer(http.FS(myFS{frontend})))
+	_ = json.Unmarshal(packageJsonFS, &packageJson)
+
+	http.Handle("/", http.FileServer(http.FS(myFS{frontendFS})))
 	http.HandleFunc("/info", info)
+
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
