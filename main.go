@@ -9,6 +9,7 @@ import (
 	"path"
 	"runtime"
 	"strings"
+	"webcomponents-with-go-example/src/backend"
 )
 
 const frontendFolder = "dist"
@@ -26,29 +27,13 @@ type Info struct {
 	Technologies Technologies `json:"technologies"`
 }
 
-type DevDependencies struct {
-	ParcelVersion string `json:"parcel"`
-}
-
-type Dependencies struct {
-	LitElementVersion string `json:"lit-element"`
-}
-
-type PackageJson struct {
-	Version         string          `json:"version"`
-	Name            string          `json:"name"`
-	Author          string          `json:"author"`
-	DevDependencies DevDependencies `json:"devDependencies"`
-	Dependencies    Dependencies    `json:"dependencies"`
-}
-
-var packageJson PackageJson
-
-//go:embed package.json
-var packageJsonFS []byte
+var packageJson backend.PackageJson
 
 //go:embed dist
 var frontendFS embed.FS
+
+//go:embed package.json
+var packageJsonFS []byte
 
 // support http://localhost:8080 instead of http://localhost:8080/dist as app root
 // see https://github.com/golang/go/issues/43431#issuecomment-752662261
@@ -81,7 +66,7 @@ func info(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	log.Println("Hello webcomponents-with-go-example!")
-	_ = json.Unmarshal(packageJsonFS, &packageJson)
+	packageJson = backend.UnmarshalPackageJson(packageJsonFS)
 
 	http.Handle("/", http.FileServer(http.FS(myFS{frontendFS})))
 	http.HandleFunc("/info", info)

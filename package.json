@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "description": "Simple webcomponents using parceljs, lit html and go as server example",
   "scripts": {
-    "dev": "parcel serve ./src/index.html",
-    "build": "parcel build ./src/index.html --public-url './'",
+    "dev": "parcel serve src/frontend/index.html",
+    "build": "parcel build src/frontend/index.html --public-url './'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
