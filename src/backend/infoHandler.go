@@ -39,8 +39,9 @@ func NewInfoHandler(packageJson PackageJson) *InfoHandler {
 	}
 }
 
-func (ih *InfoHandler) Handler(w http.ResponseWriter, r *http.Request) {
+func (ih *InfoHandler) Handler(w http.ResponseWriter, _ *http.Request) {
 	infoStr, _ := json.Marshal(ih.info)
 
+	w.Header().Set("Content-Type", "application/json")
 	_, _ = w.Write(infoStr)
 }
