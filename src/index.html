@@ -9,5 +9,10 @@
 <simple-clock></simple-clock>
 
 <script src="components/simpleClock.js" type="module"></script>
+<script type="application/javascript">
+    fetch('/info')
+        .then(response => response.json())
+        .then(data => console.log(data))
+</script>
 </body>
 </html>
