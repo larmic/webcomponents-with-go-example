@@ -32,8 +32,8 @@ func NewInfoHandler(packageJson PackageJson) *InfoHandler {
 			Author:  packageJson.Author,
 			Technologies: Technologies{
 				GoVersion:         runtime.Version(),
-				ParcelVersion:     strings.TrimPrefix(packageJson.DevDependencies.ParcelVersion, "^"),
-				LitElementVersion: strings.TrimPrefix(packageJson.Dependencies.LitElementVersion, "^"),
+				ParcelVersion:     trimPrefix(packageJson.DevDependencies.ParcelVersion),
+				LitElementVersion: trimPrefix(packageJson.Dependencies.LitElementVersion),
 			},
 		},
 	}
@@ -44,4 +44,8 @@ func (ih *InfoHandler) Handler(w http.ResponseWriter, _ *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	_, _ = w.Write(infoStr)
+}
+
+func trimPrefix(value string) string {
+	return strings.TrimPrefix(value, "^")
 }
