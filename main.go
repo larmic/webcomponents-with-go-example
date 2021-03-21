@@ -18,8 +18,7 @@ var packageJsonFS []byte
 func main() {
 	log.Println("Hello webcomponents-with-go-example!")
 	packageJson := backend.UnmarshalPackageJson(packageJsonFS)
-
-	infoHandler := &backend.InfoHandler{PackageJson: packageJson}
+	infoHandler := backend.NewInfoHandler(packageJson)
 
 	// support http://localhost:8080 instead of http://localhost:8080/dist as app root
 	stripContextPathFS := backend.StripEmbedContextPathFS{

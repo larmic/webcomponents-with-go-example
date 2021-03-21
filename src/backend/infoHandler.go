@@ -21,22 +21,26 @@ type Info struct {
 }
 
 type InfoHandler struct {
-	PackageJson PackageJson
+	info Info
+}
+
+func NewInfoHandler(packageJson PackageJson) *InfoHandler {
+	return &InfoHandler{
+		info: Info{
+			Version: packageJson.Version,
+			Name:    packageJson.Name,
+			Author:  packageJson.Author,
+			Technologies: Technologies{
+				GoVersion:         runtime.Version(),
+				ParcelVersion:     strings.TrimPrefix(packageJson.DevDependencies.ParcelVersion, "^"),
+				LitElementVersion: strings.TrimPrefix(packageJson.Dependencies.LitElementVersion, "^"),
+			},
+		},
+	}
 }
 
 func (ih *InfoHandler) Handler(w http.ResponseWriter, r *http.Request) {
-	info := Info{
-		Version: ih.PackageJson.Version,
-		Name:    ih.PackageJson.Name,
-		Author:  ih.PackageJson.Author,
-		Technologies: Technologies{
-			GoVersion:         runtime.Version(),
-			ParcelVersion:     strings.TrimPrefix(ih.PackageJson.DevDependencies.ParcelVersion, "^"),
-			LitElementVersion: strings.TrimPrefix(ih.PackageJson.Dependencies.LitElementVersion, "^"),
-		},
-	}
-
-	infoStr, _ := json.Marshal(info)
+	infoStr, _ := json.Marshal(ih.info)
 
 	_, _ = w.Write(infoStr)
 }
