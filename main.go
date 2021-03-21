@@ -7,12 +7,39 @@ import (
 	"log"
 	"net/http"
 	"path"
+	"runtime"
+	"strings"
 )
 
 const frontendFolder = "dist"
 
+type Technologies struct {
+	GoVersion         string `json:"go-version"`
+	ParcelVersion     string `json:"parcel-version"`
+	LitElementVersion string `json:"lit-element-version"`
+}
+
+type Info struct {
+	Version      string       `json:"version"`
+	Name         string       `json:"name"`
+	Author       string       `json:"author"`
+	Technologies Technologies `json:"technologies"`
+}
+
+type DevDependencies struct {
+	ParcelVersion string `json:"parcel"`
+}
+
+type Dependencies struct {
+	LitElementVersion string `json:"lit-element"`
+}
+
 type PackageJson struct {
-	Version string `json:"version"`
+	Version         string          `json:"version"`
+	Name            string          `json:"name"`
+	Author          string          `json:"author"`
+	DevDependencies DevDependencies `json:"devDependencies"`
+	Dependencies    Dependencies    `json:"dependencies"`
 }
 
 var packageJson PackageJson
@@ -36,7 +63,20 @@ func (c myFS) Open(name string) (fs.File, error) {
 }
 
 func info(w http.ResponseWriter, r *http.Request) {
-	_, _ = w.Write([]byte("{\"version\":\"" + packageJson.Version + "\"}"))
+	info := Info{
+		Version: packageJson.Version,
+		Name:    packageJson.Name,
+		Author:  packageJson.Author,
+		Technologies: Technologies{
+			GoVersion:         runtime.Version(),
+			ParcelVersion:     strings.TrimPrefix(packageJson.DevDependencies.ParcelVersion, "^"),
+			LitElementVersion: strings.TrimPrefix(packageJson.Dependencies.LitElementVersion, "^"),
+		},
+	}
+
+	infoStr, _ := json.Marshal(info)
+
+	_, _ = w.Write(infoStr)
 }
 
 func main() {
