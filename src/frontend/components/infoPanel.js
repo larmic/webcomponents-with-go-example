@@ -1,4 +1,5 @@
 import {css, html, LitElement} from "lit-element";
+import "mil-pulse-spinner";
 import {readInfo} from "./infoClient";
 import './attribute'
 
@@ -42,7 +43,7 @@ class InfoPanel extends LitElement {
 
         setTimeout(() => {
             this.updateComponent()
-        }, 1000)
+        }, 2000)
     }
 
     async updateComponent() {
@@ -54,6 +55,9 @@ class InfoPanel extends LitElement {
         this.goVersion = info.technologies.go
         this.parcelVersion = info.technologies.parcel
         this.litElementVersion = info.technologies.litElement
+
+        const spinner = this.shadowRoot.getElementById("spinner")
+        spinner.remove()
     }
 
     _getBrowserSize() {
@@ -76,6 +80,7 @@ class InfoPanel extends LitElement {
                 <div class="header">
                     ${this.name}
                 </div>
+                <mil-pulse-spinner id="spinner"></mil-pulse-spinner>
                 <div id="attributes">
                     <attribute-line key="version" value="${this.version}"></attribute-line>
                     <attribute-line key="author" value="${this.author}"></attribute-line>
@@ -127,6 +132,12 @@ class InfoPanel extends LitElement {
             }
             :host .info-panel.xtiny {
                 max-width: 300px;
+            }
+            mil-pulse-spinner {
+                --color1: red;
+                --color2:blue;
+                --width:70px;
+                --height:70px
             }
         `
     }
