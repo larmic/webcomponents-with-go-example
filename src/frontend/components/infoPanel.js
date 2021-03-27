@@ -1,5 +1,5 @@
 import {css, html, LitElement} from "lit-element";
-import "mil-pulse-spinner";
+import "./waitingSpinner.js";
 import {readInfo} from "./infoClient";
 import './attribute'
 
@@ -32,10 +32,6 @@ class InfoPanel extends LitElement {
 
         window.addEventListener('load', () => this.browserSize = this._getBrowserSize());
         window.addEventListener('resize', () => this.browserSize = this._getBrowserSize());
-    }
-
-    connectedCallback() {
-        super.connectedCallback();
 
         setTimeout(() => {
             this.updateComponent()
@@ -78,17 +74,17 @@ class InfoPanel extends LitElement {
                 <div class="header">
                     ${this.name}
                 </div>
-                <mil-pulse-spinner id="spinner"></mil-pulse-spinner>
+                <waiting-spinner id="spinner"></waiting-spinner>
                 ${this.infoLoaded ?
-                        html`
-                            <div id="attributes">
-                                <attribute-line key="version" value="${this.version}"></attribute-line>
-                                <attribute-line key="author" value="${this.author}"></attribute-line>
-                                <attribute-line key="repository" value="${this.repository}"></attribute-line>
-                                <attribute-line key="go" value="${this.goVersion}"></attribute-line>
-                                <attribute-line key="parcel" value="${this.parcelVersion}"></attribute-line>
-                                <attribute-line key="lit element" value="${this.litElementVersion}"></attribute-line>
-                            </div>` : ''
+                    html`
+                        <div id="attributes">
+                            <attribute-line key="version" value="${this.version}"></attribute-line>
+                            <attribute-line key="author" value="${this.author}"></attribute-line>
+                            <attribute-line key="repository" value="${this.repository}"></attribute-line>
+                            <attribute-line key="go" value="${this.goVersion}"></attribute-line>
+                            <attribute-line key="parcel" value="${this.parcelVersion}"></attribute-line>
+                            <attribute-line key="lit element" value="${this.litElementVersion}"></attribute-line>
+                        </div>` : ''
                 }
             </div>`;
     }
@@ -110,7 +106,6 @@ class InfoPanel extends LitElement {
         return css`
             :host .info-panel {
                 width: 100%;
-                min-height: 300px;
                 margin-right: auto;
                 margin-left: auto;
                 box-shadow: 0 6px 30px 0 rgb(0 0 0 / 12%);
@@ -134,12 +129,6 @@ class InfoPanel extends LitElement {
             }
             :host .info-panel.xtiny {
                 max-width: 300px;
-            }
-            mil-pulse-spinner {
-                --color1: red;
-                --color2:blue;
-                --width:70px;
-                --height:70px
             }
         `
     }
