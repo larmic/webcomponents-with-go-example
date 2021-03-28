@@ -45,6 +45,7 @@ class InfoPanel extends LitElement {
 
         let attributes = this.shadowRoot.getElementById('attributes')
 
+        // mark every second attribute line
         for (let childNumber = 0; childNumber < attributes.children.length; childNumber++) {
             const isSecondIteration = (childNumber + 1) % 2 === 0;
 
