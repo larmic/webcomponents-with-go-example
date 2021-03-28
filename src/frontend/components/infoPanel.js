@@ -43,10 +43,6 @@ class InfoPanel extends LitElement {
         this.parcelVersion = info.technologies.parcel
         this.litElementVersion = info.technologies.litElement
 
-        this._updateAttributeStraightLines()
-    }
-
-    async _updateAttributeStraightLines() {
         let attributes = this.shadowRoot.getElementById('attributes')
 
         for (let childNumber = 0; childNumber < attributes.children.length; childNumber++) {
