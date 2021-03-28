@@ -1,5 +1,4 @@
 import {css, html, LitElement} from "lit-element";
-import "./waitingSpinner.js";
 import {readInfo} from "./infoClient";
 import './attribute'
 
@@ -15,14 +14,12 @@ class InfoPanel extends LitElement {
             parcelVersion: {type: String},
             litElementVersion: {type: String},
             browserSize: {type: String},
-            infoLoaded: {type: Boolean},
         };
     }
 
     constructor() {
         super();
 
-        this.infoLoaded = false;
         this.name = 'Loading...'
 
         this._isLarge = window.matchMedia('(min-width: 1200px)');
@@ -33,9 +30,7 @@ class InfoPanel extends LitElement {
         window.addEventListener('load', () => this.browserSize = this._getBrowserSize());
         window.addEventListener('resize', () => this.browserSize = this._getBrowserSize());
 
-        setTimeout(() => {
-            this.updateComponent()
-        }, 2000)
+        this.updateComponent()
     }
 
     async updateComponent() {
@@ -47,11 +42,21 @@ class InfoPanel extends LitElement {
         this.goVersion = info.technologies.go
         this.parcelVersion = info.technologies.parcel
         this.litElementVersion = info.technologies.litElement
-        this.infoLoaded = true
 
-        const spinner = this.shadowRoot.getElementById("spinner")
-        spinner.remove()
+        this._updateAttributeStraightLines()
+    }
 
+    async _updateAttributeStraightLines() {
+        let attributes = this.shadowRoot.getElementById('attributes')
+
+        for (let childNumber = 0; childNumber < attributes.children.length; childNumber++) {
+            const isSecondIteration = (childNumber + 1) % 2 === 0;
+
+            if (isSecondIteration) {
+                let child = attributes.children.item(childNumber);
+                child.setAttribute("straightElement", "true")
+            }
+        }
     }
 
     _getBrowserSize() {
@@ -74,32 +79,14 @@ class InfoPanel extends LitElement {
                 <div class="header">
                     ${this.name}
                 </div>
-                <waiting-spinner id="spinner"></waiting-spinner>
-                ${this.infoLoaded ?
-                    html`
-                        <div id="attributes">
-                            <attribute-line key="version" value="${this.version}"></attribute-line>
-                            <attribute-line key="author" value="${this.author}"></attribute-line>
-                            <attribute-line key="repository" value="${this.repository}"></attribute-line>
-                            <attribute-line key="go" value="${this.goVersion}"></attribute-line>
-                            <attribute-line key="parcel" value="${this.parcelVersion}"></attribute-line>
-                            <attribute-line key="lit element" value="${this.litElementVersion}"></attribute-line>
-                        </div>` : ''
-                }
-            </div>`;
-    }
-
-    firstUpdated(changedProperties) {
-        let attributes = this.shadowRoot.getElementById('attributes')
-
-        for (let childNumber = 0; childNumber < attributes.children.length; childNumber++) {
-            const isSecondIteration = (childNumber + 1) % 2 === 0;
-
-            if (isSecondIteration) {
-                let child = attributes.children.item(childNumber);
-                child.setAttribute("straightElement", "true")
-            }
-        }
+                <div id="attributes">
+                    <attribute-line key="version" value="${this.version}"></attribute-line>
+                    <attribute-line key="author" value="${this.author}"></attribute-line>
+                    <attribute-line key="repository" value="${this.repository}"></attribute-line>
+                    <attribute-line key="go" value="${this.goVersion}"></attribute-line>
+                    <attribute-line key="parcel" value="${this.parcelVersion}"></attribute-line>
+                    <attribute-line key="lit element" value="${this.litElementVersion}"></attribute-line>
+                </div>`;
     }
 
     static get styles() {
