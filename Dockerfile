@@ -16,7 +16,7 @@ WORKDIR /usr/src/frontend
 COPY package*.json .
 COPY src/frontend ./src/frontend
 
-RUN npm ci
+RUN npm install
 RUN npm run build
 
 
