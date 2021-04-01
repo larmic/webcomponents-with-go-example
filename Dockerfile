@@ -2,39 +2,39 @@
 # see: https://docs.docker.com/develop/develop-images/multistage-build/
 
 
-# Step 1: create multi stage frontend builder
-FROM node:alpine AS frontendBuilder
+# Step 1: create multi stage assets builder
+FROM node:alpine AS assets
 
 # Create app directory
-WORKDIR /usr/src/frontend
+WORKDIR /app
+
+# Install python and other dependencies via apk
+RUN apk update && apk add python g++ make && rm -rf /var/cache/apk/*
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied where available (npm@5+)
-COPY package*.json .
-COPY src/frontend ./src/frontend
+COPY package*.json /app/
+COPY src/frontend /app/src/frontend
 
-# --no-cache: download package index on-the-fly, no need to cleanup afterwards
-# --virtual: bundle packages, remove whole bundle at once, when done
-RUN apk --no-cache --virtual build-dependencies add \
-    python \
-    make \
-    g++ \
-    && npm install \
-    && npm run build
+# Make a clean npm install and only install modules needed for production
+RUN npm ci
+
+# Build assets
+RUN npm run build
 
 
 # Step 2: create multi stage backend builder
-FROM golang:1.16 AS backendBuilder
+FROM golang:1.16 AS app
 LABEL stage=intermediate
 RUN go version
 
-WORKDIR /go/src/backend/
+WORKDIR /app
 
-COPY package.json .
-COPY main.go .
-COPY go.* .
-COPY src/backend ./src/backend
-COPY --from=frontendBuilder /usr/src/frontend/dist ./dist
+COPY package.json /app/
+COPY main.go /app/
+COPY go.* /app/
+COPY src/backend /app/src/backend
+COPY --from=assets /app/dist /app/dist
 
 RUN go mod download
 RUN go test -v ./...
@@ -73,7 +73,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then \
 # Step 3: create minimal executable image
 FROM scratch
 WORKDIR /root/
-COPY --from=backendBuilder /go/src/backend/main .
+COPY --from=app /app/main .
 
 EXPOSE 8080
 ENTRYPOINT ["./main"]
