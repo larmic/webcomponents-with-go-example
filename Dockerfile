@@ -3,9 +3,10 @@
 
 
 # Step 1: create multi stage frontend builder
-FROM node:lts-alpine AS frontendBuilder
+FROM node:alpine AS frontendBuilder
 
-RUN apk add --no-cache --virtual .gyp python
+# Install python
+RUN apk update && apk add python g++ make && rm -rf /var/cache/apk/*
 
 # Create app directory
 WORKDIR /usr/src/frontend
