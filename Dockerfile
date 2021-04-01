@@ -3,7 +3,7 @@
 
 
 # Step 1: create multi stage assets builder
-FROM node:alpine AS assets
+FROM amd64/node:alpine AS assets
 
 # Create app directory
 WORKDIR /app
