@@ -1,0 +1,15 @@
+# system
+.DS_Store
+
+# repository
+.git
+.gitignore
+Dockerfile
+README.md
+.idea
+
+# assets and other stuff
+.parcel-cache
+bin
+dist
+node_modules
