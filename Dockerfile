@@ -13,8 +13,7 @@ WORKDIR /usr/src/frontend
 COPY package*.json .
 COPY src/frontend ./src/frontend
 
-# Make a clean npm install and only install modules needed for production
-RUN npm ci
+RUN npm install
 RUN npm run build
 
 
