@@ -5,9 +5,6 @@
 # Step 1: create multi stage frontend builder
 FROM node:alpine AS frontendBuilder
 
-# Install python
-RUN apk update && apk add python g++ make && rm -rf /var/cache/apk/*
-
 # Create app directory
 WORKDIR /usr/src/frontend
 
@@ -16,8 +13,14 @@ WORKDIR /usr/src/frontend
 COPY package*.json .
 COPY src/frontend ./src/frontend
 
-RUN npm install
-RUN npm run build
+# --no-cache: download package index on-the-fly, no need to cleanup afterwards
+# --virtual: bundle packages, remove whole bundle at once, when done
+RUN apk --no-cache --virtual build-dependencies add \
+    python \
+    make \
+    g++ \
+    && npm install \
+    && npm run build
 
 
 # Step 2: create multi stage backend builder
