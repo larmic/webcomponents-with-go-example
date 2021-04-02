@@ -38,7 +38,28 @@ on your local machine.
 
 [Github Actions](https://github.com/features/actions) to build (and push) docker image on each commit.
 
-### Demos
+## Build and run it on your local machine
 
-See [docker-compose demo](example/docker/readme.md) and 
+### build application without docker
+
+```sh 
+$ make frontend-build
+$ make backend-build
+$ ./bin/server
+```
+
+Open `localhost:8080` in your browser.
+
+### build application with docker
+
+```sh 
+$ make docker-build
+$ make docker-run
+```
+
+Open `localhost:8080` in your browser.
+
+## Demos
+
+See [docker-compose demo](example/docker/readme.md) and
 [kubernetes demo](example/kubernetes/readme.md).
