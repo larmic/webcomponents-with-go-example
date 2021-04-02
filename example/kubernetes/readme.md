@@ -1,4 +1,4 @@
-# webcomponents-with-go-example k8s configuration
+# webcomponents-with-go-example k8s example configuration
 
 ## Step 1
 

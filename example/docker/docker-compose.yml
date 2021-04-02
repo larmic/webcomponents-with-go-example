@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  demo-app:
+    image: larmic/webcomponents-with-go-example:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - STAGE=docker-compose-dev

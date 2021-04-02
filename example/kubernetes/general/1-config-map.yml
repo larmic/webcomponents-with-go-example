@@ -4,4 +4,4 @@ metadata:
   name: larmic-test-apps-config-maps
   namespace: larmic-test-apps
 data:
-  STAGE: "dev"
+  STAGE: "kubernetes-dev"
