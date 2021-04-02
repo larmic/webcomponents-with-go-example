@@ -2,6 +2,10 @@ CONTAINER_NAME=webcomponents-with-go-example
 IMAGE_NAME=larmic/webcomponents-with-go-example
 IMAGE_TAG=latest
 
+clean:
+	rm -rf dist
+	rm -rf bin
+
 frontend-run:
 	npm run dev
 
