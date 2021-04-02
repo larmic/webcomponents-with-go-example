@@ -9,9 +9,11 @@ frontend-build:
 	rm -rf dist
 	npm run build
 
+# first call frontend-build if something changes in frontend
 backend-run:
 	go run main.go
 
+# first call frontend-build if something changes in frontend
 backend-build:
 	rm -rf bin
 	go build -a -o bin/server .
