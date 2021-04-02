@@ -1,5 +1,6 @@
 const readInfo = async () => {
-    const response = await fetch('/info')
+    const contextPath = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2));
+    const response = await fetch(contextPath + '/info')
 
     if (response.status !== 200) {
         console.log('Looks like there was a problem. Status Code: ' + response.status)
