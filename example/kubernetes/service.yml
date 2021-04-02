@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webcomponents-with-go-example
+  namespace: larmic-test-apps
+spec:
+  ports:
+    - name: http
+      targetPort: 8080
+      port: 80
+  selector:
+    app: webcomponents-with-go-example

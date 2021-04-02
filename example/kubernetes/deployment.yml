@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webcomponents-with-go-example
+  labels:
+    app: webcomponents-with-go-example
+  namespace: larmic-test-apps
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webcomponents-with-go-example
+  template:
+    metadata:
+      labels:
+        app: webcomponents-with-go-example
+    spec:
+      containers:
+        - name: webcomponents-with-go-example
+          image: larmic/webcomponents-with-go-example:latest
+          imagePullPolicy: Always
+          env:
+            - name: STAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: larmic-test-apps-config-maps
+                  key: STAGE

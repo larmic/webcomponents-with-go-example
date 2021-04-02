@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: webcomponents-with-go-example
+  namespace: larmic-test-apps
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /demo
+            backend:
+              serviceName: webcomponents-with-go-example
+              servicePort: http

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: larmic-test-apps-config-maps
+  namespace: larmic-test-apps
+data:
+  STAGE: "dev"
