@@ -21,6 +21,7 @@ type Info struct {
 	Version      string       `json:"version"`
 	Name         string       `json:"name"`
 	Author       string       `json:"author"`
+	Stage        string       `json:"stage"`
 	Repository   Repository   `json:"repository"`
 	Technologies Technologies `json:"technologies"`
 }
@@ -29,12 +30,13 @@ type InfoHandler struct {
 	info Info
 }
 
-func NewInfoHandler(packageJson PackageJson) *InfoHandler {
+func NewInfoHandler(packageJson PackageJson, environment Environment) *InfoHandler {
 	return &InfoHandler{
 		info: Info{
 			Version: packageJson.Version,
 			Name:    packageJson.Name,
 			Author:  packageJson.Author,
+			Stage:   environment.Stage,
 			Repository: Repository{
 				Url: packageJson.Repository.Url,
 			},

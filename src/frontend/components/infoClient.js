@@ -13,6 +13,7 @@ const readInfo = async () => {
         name: json.name,
         author: json.author,
         repository: json.repository.url,
+        stage: json.stage,
         technologies: {
             go: json.technologies.go_version,
             parcel: json.technologies.parcel_version,

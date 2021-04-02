@@ -9,6 +9,7 @@ class InfoPanel extends LitElement {
             name: {type: String},
             version: {type: String},
             author: {type: String},
+            stage: {type: String},
             repository: {type: String},
             goVersion: {type: String},
             parcelVersion: {type: String},
@@ -38,6 +39,7 @@ class InfoPanel extends LitElement {
         this.name = info.name
         this.version = info.version
         this.author = info.author
+        this.stage = info.stage
         this.repository = info.repository
         this.goVersion = info.technologies.go
         this.parcelVersion = info.technologies.parcel
@@ -79,6 +81,7 @@ class InfoPanel extends LitElement {
                 <div id="attributes">
                     <attribute-line key="version" value="${this.version}"></attribute-line>
                     <attribute-line key="author" value="${this.author}"></attribute-line>
+                    <attribute-line key="stage" value="${this.stage}"></attribute-line>
                     <attribute-line key="repository" value="${this.repository}"></attribute-line>
                     <attribute-line key="go" value="${this.goVersion}"></attribute-line>
                     <attribute-line key="parcel" value="${this.parcelVersion}"></attribute-line>
