@@ -20,7 +20,7 @@ func main() {
 
 func infoHandler(w http.ResponseWriter, r *http.Request) {
 	info := backend.Info{
-		Version: "0.0.1",
+		Version: "development",
 		Name:    "webcomponents-with-go mock server",
 		Author:  "Mr. Mock",
 		Stage:   "Local development",
