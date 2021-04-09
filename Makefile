@@ -7,7 +7,7 @@ clean:
 	rm -rf bin
 
 frontend-run:
-	npm run dev
+	npm run dev & go run mock.go
 
 frontend-build:
 	rm -rf dist

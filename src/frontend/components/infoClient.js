@@ -1,6 +1,5 @@
 const readInfo = async () => {
-    const contextPath = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2));
-    const response = await fetch(contextPath + '/info')
+    const response = await fetch(getInfoUrl())
 
     if (response.status !== 200) {
         console.log('Looks like there was a problem. Status Code: ' + response.status)
@@ -20,6 +19,15 @@ const readInfo = async () => {
             parcel: json.technologies.parcel_version,
             litElement: json.technologies.lit_element_version,
         },
+    }
+}
+
+const getInfoUrl = () => {
+    if (process.env.NODE_ENV === 'production') {
+        const contextPath = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2))
+        return contextPath + '/info'
+    } else {
+        return "http://localhost:8080/info"
     }
 }
 
