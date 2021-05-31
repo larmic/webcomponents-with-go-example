@@ -4,6 +4,7 @@
 # repository
 .git
 .gitignore
+.github
 Dockerfile
 README.md
 .idea
