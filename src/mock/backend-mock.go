@@ -4,6 +4,7 @@ package main
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"runtime"
@@ -19,18 +20,19 @@ func main() {
 }
 
 func infoHandler(w http.ResponseWriter, r *http.Request) {
+	packageJson := getPackageJson()
 	info := backend.Info{
-		Version: "development",
-		Name:    "webcomponents-with-go mock server",
-		Author:  "Lars Michaelis",
-		Stage:   "Local development",
+		Version: "local development",
+		Name:    packageJson.Name,
+		Author:  packageJson.Author,
+		Stage:   "local development (mock backend)",
 		Repository: backend.Repository{
-			Url: "https://github.com/larmic/webcomponents-with-go-example",
+			Url: packageJson.Repository.Url,
 		},
 		Technologies: backend.Technologies{
 			GoVersion:         runtime.Version(),
-			ParcelVersion:     "2.0.0-beta.3.1",
-			LitElementVersion: "2.5.1",
+			ParcelVersion:     packageJson.DevDependencies.ParcelVersion,
+			LitElementVersion: packageJson.Dependencies.LitElementVersion,
 		},
 	}
 
@@ -39,4 +41,9 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 
 	infoStr, _ := json.Marshal(info)
 	_, _ = w.Write(infoStr)
+}
+
+func getPackageJson() backend.PackageJson {
+	dat, _ := ioutil.ReadFile("package.json")
+	return backend.UnmarshalPackageJson(dat)
 }
