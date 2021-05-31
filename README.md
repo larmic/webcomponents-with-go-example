@@ -42,7 +42,7 @@ on your local machine.
 
 ### run frontend in development mode (for debugging etc...)
 
-This command starts a backend mock server (see `mock.go`) and allows using the full parcel development support.
+This command starts a backend mock server (see `src/mock/backend-mock.go`) and allows using the full parcel development support.
 
 ```sh 
 $ make frontend-run
