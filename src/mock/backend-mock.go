@@ -1,4 +1,4 @@
-// simple mock server started when using `make frontend-run`.
+// simple mock backend server started when using `make frontend-run`.
 
 package main
 
