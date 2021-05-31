@@ -11,9 +11,6 @@ FROM amd64/node:alpine AS assets
 # Create app directory
 WORKDIR /app
 
-# Install python and other dependencies via apk
-RUN apk update && apk add python g++ make && rm -rf /var/cache/apk/*
-
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied where available (npm@5+)
 COPY package*.json /app/
