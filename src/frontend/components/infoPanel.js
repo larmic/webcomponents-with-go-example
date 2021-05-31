@@ -1,5 +1,5 @@
-import {css, html, LitElement} from "lit-element";
-import {readInfo} from "./infoClient";
+import {css, html, LitElement} from "lit-element"
+import {readInfo} from "./infoClient"
 import './attribute'
 
 class InfoPanel extends LitElement {
@@ -15,21 +15,21 @@ class InfoPanel extends LitElement {
             parcelVersion: {type: String},
             litElementVersion: {type: String},
             browserSize: {type: String},
-        };
+        }
     }
 
     constructor() {
-        super();
+        super()
 
         this.name = 'Loading...'
 
-        this._isLarge = window.matchMedia('(min-width: 1200px)');
-        this._isMedium = window.matchMedia('(min-width: 990px)');
-        this._isSmall = window.matchMedia('(min-width: 768px)');
-        this._isTiny = window.matchMedia('(min-width: 560px)');
+        this._isLarge = window.matchMedia('(min-width: 1200px)')
+        this._isMedium = window.matchMedia('(min-width: 990px)')
+        this._isSmall = window.matchMedia('(min-width: 768px)')
+        this._isTiny = window.matchMedia('(min-width: 560px)')
 
-        window.addEventListener('load', () => this.browserSize = this._getBrowserSize());
-        window.addEventListener('resize', () => this.browserSize = this._getBrowserSize());
+        window.addEventListener('load', () => this.browserSize = this._getBrowserSize())
+        window.addEventListener('resize', () => this.browserSize = this._getBrowserSize())
 
         this.updateComponent()
     }
@@ -49,10 +49,10 @@ class InfoPanel extends LitElement {
 
         // mark every second attribute line
         for (let childNumber = 0; childNumber < attributes.children.length; childNumber++) {
-            const isSecondIteration = (childNumber + 1) % 2 === 0;
+            const isSecondIteration = (childNumber + 1) % 2 === 0
 
             if (isSecondIteration) {
-                let child = attributes.children.item(childNumber);
+                let child = attributes.children.item(childNumber)
                 child.setAttribute("straightElement", "true")
             }
         }
@@ -86,7 +86,7 @@ class InfoPanel extends LitElement {
                     <attribute-line key="go" value="${this.goVersion}"></attribute-line>
                     <attribute-line key="parcel" value="${this.parcelVersion}"></attribute-line>
                     <attribute-line key="lit element" value="${this.litElementVersion}"></attribute-line>
-                </div>`;
+                </div>`
     }
 
     static get styles() {
