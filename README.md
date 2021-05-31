@@ -1,5 +1,9 @@
 # webcomponents-with-go-example
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+![Docker build and push](https://github.com/larmic/webcomponents-with-go-example/workflows/Docker%20build%20and%20push/badge.svg)
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/larmic/webcomponents-with-go-example)
+
 A web application example showing the use of [WebComponents](https://developer.mozilla.org/de/docs/Web/Web_Components) 
 with [Go](https://golang.org/) as small executable server.
 
