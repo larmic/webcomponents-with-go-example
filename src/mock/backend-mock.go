@@ -22,15 +22,15 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 	info := backend.Info{
 		Version: "development",
 		Name:    "webcomponents-with-go mock server",
-		Author:  "Mr. Mock",
+		Author:  "Lars Michaelis",
 		Stage:   "Local development",
 		Repository: backend.Repository{
 			Url: "https://github.com/larmic/webcomponents-with-go-example",
 		},
 		Technologies: backend.Technologies{
 			GoVersion:         runtime.Version(),
-			ParcelVersion:     "2.0.0-beta.2",
-			LitElementVersion: "2.4.0",
+			ParcelVersion:     "2.0.0-beta.3.1",
+			LitElementVersion: "2.5.1",
 		},
 	}
 
