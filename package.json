@@ -13,10 +13,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.0.0-beta.2",
-    "parcel": "^2.0.0-beta.2"
+    "@parcel/transformer-sass": "^2.0.0-beta.3.1",
+    "parcel": "^2.0.0-beta.3.1"
   },
   "dependencies": {
-    "lit-element": "^2.4.0"
+    "lit-element": "^2.5.1"
   }
 }
