@@ -52,13 +52,15 @@ class InfoPanel extends LitElement {
 
         // mark every second attribute line
         for (let childNumber = 0; childNumber < attributes.children.length; childNumber++) {
-            const isSecondIteration = (childNumber + 1) % 2 === 0
-
-            if (isSecondIteration) {
+            if (this._isSecondIteration(childNumber)) {
                 let child = attributes.children.item(childNumber)
                 child.setAttribute("straightElement", "true")
             }
         }
+    }
+
+    _isSecondIteration = (childNumber) => {
+        return (childNumber + 1) % 2 === 0
     }
 
     _getBrowserSize = () => {
