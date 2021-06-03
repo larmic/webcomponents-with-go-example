@@ -2,10 +2,12 @@ package backend
 
 import (
 	"os"
+	"runtime"
 )
 
 type Environment struct {
 	Stage string
+	Go    string
 }
 
 func ReadEnvironment() Environment {
@@ -15,5 +17,5 @@ func ReadEnvironment() Environment {
 		return Environment{Stage: "unknown"}
 	}
 
-	return Environment{Stage: stage}
+	return Environment{Stage: stage, Go: runtime.Version()}
 }

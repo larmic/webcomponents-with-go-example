@@ -3,7 +3,6 @@ package backend
 import (
 	"encoding/json"
 	"net/http"
-	"runtime"
 	"strings"
 )
 
@@ -41,7 +40,7 @@ func NewInfoHandler(packageJson PackageJson, environment Environment) *InfoHandl
 				Url: packageJson.Repository.Url,
 			},
 			Technologies: Technologies{
-				GoVersion:         runtime.Version(),
+				GoVersion:         environment.Go,
 				ParcelVersion:     trimPrefix(packageJson.DevDependencies.ParcelVersion),
 				LitElementVersion: trimPrefix(packageJson.Dependencies.LitElementVersion),
 			},
