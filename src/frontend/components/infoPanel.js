@@ -28,13 +28,16 @@ class InfoPanel extends LitElement {
         this._isSmall = window.matchMedia('(min-width: 768px)')
         this._isTiny = window.matchMedia('(min-width: 560px)')
 
+        this._getBrowserSize = this._getBrowserSize.bind(this)
+        this._updateComponent = this._updateComponent.bind(this)
+
         window.addEventListener('load', () => this.browserSize = this._getBrowserSize())
         window.addEventListener('resize', () => this.browserSize = this._getBrowserSize())
 
-        this.updateComponent()
+        this._updateComponent()
     }
 
-    async updateComponent() {
+    _updateComponent = async () => {
         let info = await readInfo()
         this.name = info.name
         this.version = info.version
@@ -58,7 +61,7 @@ class InfoPanel extends LitElement {
         }
     }
 
-    _getBrowserSize() {
+    _getBrowserSize = () => {
         if (this._isLarge.matches) {
             return 'large'
         } else if (this._isMedium.matches) {
