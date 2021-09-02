@@ -24,7 +24,7 @@ RUN npm run build
 
 
 # Step 2: create multi stage backend builder
-FROM golang:1.16 AS app
+FROM golang:1.17 AS app
 LABEL stage=intermediate
 RUN go version
 

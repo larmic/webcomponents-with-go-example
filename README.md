@@ -19,7 +19,7 @@ with [Go](https://golang.org/) as small executable server.
 
 ### Server
 
-[Go](https://golang.org/) 1.16 supports embedding files to executable. So it is possible to create very small 
+[Go](https://golang.org/) >= 1.16 supports embedding files to executable. So it is possible to create very small 
 executables that contain all needed assets.
 
 ### Frontend
